@@ -1,22 +1,23 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 import time
 import tone
 import os
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def home():
     # Render the home page template
     return render_template('index.html')
 
-
 @app.route('/generate', methods=['GET', 'POST'])
 def generate():
 
     if request.method == 'POST':
-        f = request.files['file']
+        try:
+            f = request.files['file']
+        except:
+            return render_template('sorry.html')
         f.save(f'static/{f.filename}')
         print(f.filename)
 
