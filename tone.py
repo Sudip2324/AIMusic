@@ -6,7 +6,8 @@ from music21.stream import Stream
 
 def gen_music(filename):
     # converting image to b&w 12x12 px
-    im = cv2.imread(f'static\\{filename}')
+    static_path = 'static'
+    im = cv2.imread(os.path.join(static_path, filename))
     try:
         image = cv2.resize(im, (16, 16))
         print('RESIZIng Suceessfull')
@@ -21,11 +22,10 @@ def gen_music(filename):
     base = os.path.basename(filename)
     filename1 = os.path.splitext(base)[0]
 
-    cv2.imwrite(
-        f'static\\{filename1}16x16.png', image)
+    cv2.imwrite(os.path.join(static_path, f'{filename1}16x16.png'), image)
 
     # extracting parameters for tone matrix from image
-    img = cv2.imread(f'static\\{filename1}16x16.png')
+    img = cv2.imread(os.path.join(static_path, f'{filename1}16x16.png'))
     new = np.zeros((16, 16), dtype=object)
     for x in range(16):
         for y in range(16):
