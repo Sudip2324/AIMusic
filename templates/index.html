@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AI Music Generation</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    	    background-size: 400% 400%;
+        	animation: gradient 20s ease infinite;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 36px;
+            margin-top: 120px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: white;
+            text-align: left;
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-weight: 550;
+        }
+
+
+        /* Style the select box */
+            select{
+            appearance: none;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            background-color: #fff;
+            font-size: 16px;
+            padding: 10px 10px 10px 10px;
+            width: 200px;
+            }
+
+
+            input{
+                text-align: center;
+                color: white;
+            }
+
+            /* Style the options */
+            option {
+            background-color: #f2f2f2;
+            font-size: 16px;
+            text-align-last: center;
+            margin: 5px;
+            }
+
+        @keyframes gradient {
+	    0% {
+		background-position: 0% 50%;
+	    }
+	    50% {
+		background-position: 100% 50%;
+	    }
+	    100% {
+		background-position: 0% 50%;
+	    }
+    }
+
+
+        .bn-main {
+        width: 160px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        margin: 10px;
+        height: 55px;
+        text-align: center;
+        border: none;
+        background-size: 300% 100%;
+        border-radius: 50px;
+        -o-transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+        }
+
+        .bn-main:hover {
+        background-position: 100% 0;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+        }
+
+        .bn-main:focus {
+        outline: none;
+        }
+
+        .bn-main.bn {
+        background-image: linear-gradient(
+            to right,
+            #6253e1,
+            #852d91,
+            #4c49ff,
+            #7c21eb
+            );
+        }
+
+
+        input[type="range"] {
+        width:200px;
+            outline: none;
+        }
+
+
+        output{
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Music Generation Using Algorithm</h1><br>
+    <form action="{{ url_for('generate')}}" method="POST" enctype = "multipart/form-data">
+        <input type="file" name="file" accept="image/*" />
+        <br/>
+        <input class="bn-main bn" type="submit" value="Generate Music">
+    </form>
+</body>
+
+</html>
