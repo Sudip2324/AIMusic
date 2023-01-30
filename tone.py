@@ -4,11 +4,15 @@ import os
 from music21.chord import Chord
 from music21.stream import Stream
 
-
 def gen_music(filename):
     # converting image to b&w 12x12 px
     im = cv2.imread(f'static\\{filename}')
-    image = cv2.resize(im, (16, 16))
+    try:
+        image = cv2.resize(im, (16, 16))
+        print('RESIZIng Suceessfull')
+    except:
+        print('{filename} is invalid')
+        return None
     image[np.all(image < (128, 128, 128), axis=-1)] = (0, 0, 0)
     image[np.all(image >= (128, 128, 128), axis=-1)] = (255, 255, 255)
     black = np.all(image == (0, 0, 0),  axis=-1)
