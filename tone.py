@@ -12,7 +12,7 @@ def gen_music(filename):
         image = cv2.resize(im, (16, 16))
         print('RESIZIng Suceessfull')
     except:
-        print('{filename} is invalid')
+        print(f'{filename} is invalid')
         return None
     image[np.all(image < (128, 128, 128), axis=-1)] = (0, 0, 0)
     image[np.all(image >= (128, 128, 128), axis=-1)] = (255, 255, 255)
@@ -22,10 +22,12 @@ def gen_music(filename):
     base = os.path.basename(filename)
     filename1 = os.path.splitext(base)[0]
 
-    cv2.imwrite(os.path.join(static_path, f'{filename1}16x16.png'), image)
+    small_image_path =  os.path.join(static_path, 'upload_image', 
+                                    filename1 + '16x16.png')
+    cv2.imwrite(small_image_path, image)
 
     # extracting parameters for tone matrix from image
-    img = cv2.imread(os.path.join(static_path, f'{filename1}16x16.png'))
+    img = cv2.imread(small_image_path)
     new = np.zeros((16, 16), dtype=object)
     for x in range(16):
         for y in range(16):

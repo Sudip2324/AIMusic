@@ -12,7 +12,7 @@ def home():
 
 @app.route('/generate', methods=['GET', 'POST'])
 def generate():
-
+    static_path = 'static'
     if request.method == 'POST':
         try:
             f = request.files['file']
@@ -28,10 +28,15 @@ def generate():
     base = os.path.basename(f.filename)
     filename1 = os.path.splitext(base)[0]
     timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
-    new_file = f'static/{filename1}' + timestr + '.mid'
+    
+    new_file = os.path.join(static_path, 'midi_generation', 
+                            filename1 + timestr + '.mid')
     print(f'new file: {new_file}')
     out_music.write('midi', new_file)
-    return render_template('result.html', file_path=new_file, ori_image=f.filename, img_name=filename1)
+    return render_template('result.html', 
+                            file_path=new_file, 
+                            ori_image=f.filename, 
+                            img_name=filename1)
 
 if __name__ == '__main__':
     app.run(debug=True)
