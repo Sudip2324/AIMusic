@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AI Music Generation</title>
+    <link rel="stylesheet" href="static/css/index_styles.css">
+    <link rel="icon" type="image/x-icon" href="static/images/music.png">
+</head>
+
+<body>
+    <h1>Music Generation Using Algorithm</h1><br>
+    <form action="{{ url_for('generate')}}" method="POST" enctype = "multipart/form-data">
+        <input type="file" name="file" accept="image/*" />
+        <br/>
+        <input class="bn-main bn" type="submit" value="Generate Music">
+    </form>
+</body>
+
+</html>

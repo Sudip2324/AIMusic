@@ -1,14 +1,14 @@
-from flask import Flask, request, render_template, url_for
+import os
 import time
 import tone
-import os
+from flask import Flask, request, render_template, url_for
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     # Render the home page template
-    return render_template('index.html')
+    return render_template('algo_index.html')
 
 @app.route('/generate', methods=['GET', 'POST'])
 def generate():
@@ -33,7 +33,7 @@ def generate():
                             filename1 + timestr + '.mid')
     print(f'new file: {new_file}')
     out_music.write('midi', new_file)
-    return render_template('result.html', 
+    return render_template('algo_result.html', 
                             file_path=new_file, 
                             ori_image=f.filename, 
                             img_name=filename1)

@@ -14,7 +14,7 @@ def home():
 
 @app.route('/generate', methods=['GET', 'POST'])
 def generate():
-
+    
     if request.method == 'POST':
         instrument = request.form['instrument']
         model_input = request.form['model_input']
@@ -27,7 +27,11 @@ def generate():
     timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
     new_file = f'static/{instrument}_{bpm}bpm_' + timestr + '.mid'
     out_music.write('midi', new_file)
-    return render_template('result.html', file_path=new_file, instrument=instrument, timesig=timesig, bpm=bpm)
+    return render_template('result.html', 
+                            file_path=new_file, 
+                            instrument=instrument, 
+                            timesig=timesig, 
+                            bpm=bpm)
 
 
 if __name__ == '__main__':

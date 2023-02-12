@@ -1,9 +1,7 @@
-import music21 as m21
-from music21 import *
-import tensorflow as tf
-import numpy as np
 import json
-
+import numpy as np
+import music21 as m21
+import tensorflow as tf
 
 def sample_with_temp(preds, temperature):
     if temperature == 0:
@@ -14,7 +12,6 @@ def sample_with_temp(preds, temperature):
         preds = exp_preds / np.sum(exp_preds)
         return np.random.choice(len(preds), p=preds)
 
-
 def load_decoder(file1, file2):
     # load json file
     with open(file1) as file1:
@@ -22,7 +19,6 @@ def load_decoder(file1, file2):
     with open(file2) as f:
         int_to_element = json.load(f)
     return element_to_int, int_to_element
-
 
 def fraction(duration):
     if '/' in duration:
@@ -37,7 +33,8 @@ def music_stream(instrument, model_input, timesig, bpm):
 
     # getting decoder dic
     int_to_note, int_to_duration = load_decoder(
-        'int_notes.json', 'int_durations.json')
+                                            'static/models/int_notes.json', 
+                                            'static/models/int_durations.json')
 
     # parsing json file
     int_to_note = json.loads(int_to_note)
@@ -76,7 +73,7 @@ def music_stream(instrument, model_input, timesig, bpm):
         for idx, n_i in enumerate(notes_prediction[0]):
             try:
                 note_name = int_to_note[str(idx)]
-                midi_note = note.Note(note_name)
+                midi_note = m21.note.Note(note_name)
                 new_note[midi_note.pitch.midi] = n_i
             except:
                 pass
@@ -99,8 +96,6 @@ def music_stream(instrument, model_input, timesig, bpm):
             durations_input_sequence = durations_input_sequence[1:]
 
     overall_preds = np.transpose(np.array(overall_preds))
-
-    ##
 
     midi_stream = m21.stream.Stream()
 
@@ -134,7 +129,7 @@ def music_stream(instrument, model_input, timesig, bpm):
             new_note.duration = m21.duration.Duration(
                 quarterLength=duration_pattern)
             midi_stream.append(new_note)
-        elif note_pattern != 'START':
+        else:
             # pattern is a note
             new_note = m21.note.Note(note_pattern)
             new_note.duration = m21.duration.Duration(
