@@ -130,11 +130,12 @@ output{
 }
 
     </style>
+    <link rel="icon" type="image/x-icon" href="static/images/music.png">
 </head>
 
 <body>
     <h1>AI Music Generation</h1><br>
-    <form action="{{ url_for('generate')}}" method="POST" oninput="result.value = bpm.value">
+    <form action="{{ url_for('ai_generate')}}" method="POST" oninput="result.value = bpm.value">
         <label>Instrument</label>
         <select name="instrument">
             <option value="Piano">Piano</option>
@@ -148,7 +149,7 @@ output{
 
         <label>Model</label>
         <select name="model_input">
-            <option value="hindi_songs_v2.h5">Hindi</option>
+            <option value="static/models/hindi_songs_v2.h5">Hindi</option>
         </select>
         <br />
         

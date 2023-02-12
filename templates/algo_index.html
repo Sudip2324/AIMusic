@@ -8,7 +8,7 @@
 
 <body>
     <h1>Music Generation Using Algorithm</h1><br>
-    <form action="{{ url_for('generate')}}" method="POST" enctype = "multipart/form-data">
+    <form action="{{ url_for('algo_generate')}}" method="POST" enctype = "multipart/form-data">
         <input type="file" name="file" accept="image/*" />
         <br/>
         <input class="bn-main bn" type="submit" value="Generate Music">

@@ -1,18 +1,18 @@
+import os
 import cv2
 import numpy as np
-import os
 from music21.chord import Chord
 from music21.stream import Stream
 
 def gen_music(filename):
-    # converting image to b&w 12x12 px
+    ''' converting image to b&w 16x16 px'''
     static_path = 'static'
     im = cv2.imread(os.path.join(static_path, filename))
     try:
         image = cv2.resize(im, (16, 16))
-        print('RESIZIng Suceessfull')
-    except:
-        print(f'{filename} is invalid')
+        print('RESIZING SUCCESSFUL')
+    except Exception as err:
+        print(f'{filename} is invalid: {str(err)}')
         return None
     image[np.all(image < (128, 128, 128), axis=-1)] = (0, 0, 0)
     image[np.all(image >= (128, 128, 128), axis=-1)] = (255, 255, 255)
@@ -54,7 +54,7 @@ def gen_music(filename):
                 new[x][y] = a[x][y]
 
     # generating midi file
-    s = Stream()
+    stream_algo = Stream()
     for y in range(16):
         add = ''
         for x in range(16):
@@ -62,6 +62,6 @@ def gen_music(filename):
                 temp = new[x][y]
                 add = add+' '+temp
         if (add):
-            s.insertIntoNoteOrChord(y, Chord(add))
+            stream_algo.insertIntoNoteOrChord(y, Chord(add))
 
-    return s
+    return stream_algo
