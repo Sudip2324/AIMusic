@@ -22,7 +22,7 @@ def gen_music(filename):
     base = os.path.basename(filename)
     filename1 = os.path.splitext(base)[0]
 
-    small_image_path =  os.path.join(static_path, 'upload_image', 
+    small_image_path =  os.path.join(static_path, 'upload_image',
                                     filename1 + '16x16.png')
     cv2.imwrite(small_image_path, image)
 
