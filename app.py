@@ -54,7 +54,7 @@ def algo_generate():
     if request.method == 'POST':
         try:
             f = request.files['file']
-        except KeyError:
+        except Exception as err:
             return render_template('sorry.html', message='No file was attached to the request')
 
         f.save(f'static/{f.filename}')

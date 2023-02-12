@@ -1,89 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Music Generated</title>
+{% extends "layout.html" %}
 
-    <style>
+{% block title %}
+: AI music Generated
+{% endblock %}
 
-        .center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -moz-transform: translateX(-50%) translateY(-50%);
-        -webkit-transform: translateX(-50%) translateY(-50%);
-        transform: translateX(-50%) translateY(-50%);
-        text-align: center;
-        font-size: 50px;
-        font-weight: 600;
-        color: white;
-        }
-
-
-        body {
-	    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    	background-size: 400% 400%;
-    	animation: gradient 20s ease infinite;
-        }
-
-        @keyframes gradient {
-	    0% {
-		background-position: 0% 50%;
-	    }
-	    50% {
-		background-position: 100% 50%;
-	    }
-	    100% {
-		background-position: 0% 50%;
-	    }
-    }
-
-
-  .bn-main {
-  width: 160px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  margin: 20px;
-  height: 55px;
-  text-align: center;
-  border: none;
-  background-size: 300% 100%;
-  border-radius: 50px;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.bn-main:hover {
-  background-position: 100% 0;
-  -o-transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-}
-
-.bn-main:focus {
-  outline: none;
-}
-
-.bn-main.bn {
-  background-image: linear-gradient(
-      to right,
-      #6253e1,
-      #852d91,
-      #4c49ff,
-      #7c21eb
-    );
-}
-
-.small{
-    font-size: 30px;
-}
-    </style>
-    <link rel="icon" type="image/x-icon" href="static/images/music.png">
-
-</head>
-<body>
+{% block main %}
     <div class="center">
     <p>Music has been generated!</p>
     <p class="small">
@@ -93,5 +14,4 @@
     </p>
     <a href={{ file_path }}><button class="bn-main bn">Download Now</button></a>
     </div>
-</body>
-</html>
+{% endblock %}

@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Music Generated</title>
-    <link rel="stylesheet" href="static/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="static/images/music.png">
+{% extends "layout.html" %}
 
-</head>
-<body>
+{% block title %}
+: Generate Using Algorithm
+{% endblock %}
+
+{% block main %}
+    <h1>Music has been generated!</h1>
+    <h2 class="small">Original Image</h2>
+
     <div class="center">
-    <p>Music has been generated!</p>
-
-    <p class="small">Original Image</p>
-    <img src="static/{{ ori_image }}" width="500"/>
-
-    <p class="small">16x16 Black and White Image</p>
-    <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
-    <br/>
-
-    <a href="{{ file_path }}"><button class="bn-main bn">Download Music</button></a>
-    <br/>
-    <a href='/'><button class="bn-main bn">Generate New</button></a>
+        <img class='image' src="static/{{ ori_image }}"/>
+        <p class="small">16x16 Black and White Image</p>
+        <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
+        <br/>
+        <a href="{{ file_path }}">
+            <button class="bn-main bn">Download Music</button>
+        </a>
+        <br/>
+        <a href="/algorithm">
+            <button class="bn-main bn">Generate New</button>
+        </a>
     </div>
-</body>
-</html>
+{% endblock %}
