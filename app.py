@@ -20,6 +20,13 @@ def algorithm_home():
     '''
     return render_template('algo_index.html')
 
+@app.route('/ai_algo_sync')
+def ai_algo_sync():
+    '''
+    Render page for ai algorithm sync generation
+    '''
+    return render_template('ai_algo_sync_index.html')
+
 @app.route('/ai_generate', methods=['GET', 'POST'])
 def ai_generate():
     '''
@@ -76,6 +83,17 @@ def algo_generate():
                             file_path=new_file,
                             ori_image=f.filename,
                             img_name=filename1)
+
+@app.route('/ai_algo_sync_generate', methods=['GET', 'POST'])
+def ai_algo_sync_generate():
+    '''
+    Return: file for algorithmic generation of midi file
+    '''
+    static_path = 'static'
+    
+    return render_template('ai_algo_sync_generate.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+: Generate Using AI sync beat Algorithm
+{% endblock %}
+
+{% block main %}
+    <h1>AI Music Generation sync with Algorithm music rythem</h1><br>
+    <form action="{{ url_for('ai_algo_sync_generate')}}" method="POST">
+        <label>Instrument</label>
+        <select name="instrument">
+            <option value="Piano">Piano</option>
+            <option value="Guitar">Guitar</option>
+            <option value="Violin">Violin</option>
+            <option value="Flute">Flute</option>
+            <option value="Soprano">Soprano</option>
+            <option value="ElectricGuitar">ElectricGuitar</option>
+        </select>
+        <br />
+
+        <label>Model</label>
+        <select name="model_input">
+            <option value="static/models/hindi_songs_v2.h5">Hindi</option>
+        </select>
+        <label>Upload Image</label>
+        <div class="file-input">
+            <input type="file" id="file" class="file" name="file" accept="image/*" required>
+            <label for="file">Select Image</label>
+          </div>
+
+        <input class="bn-main bn" type="submit" value="Generate Music"/>
+    </form>
+{% endblock %}
