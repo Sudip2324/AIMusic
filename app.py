@@ -62,7 +62,7 @@ def algo_generate():
         try:
             f = request.files['file']
         except Exception as err:
-            return render_template('sorry.html', message='No file was attached to the request')
+            return render_template('sorry.html', message='Please provide valid file')
 
         f.save(f'static/{f.filename}')
         print(f.filename)
@@ -90,6 +90,38 @@ def ai_algo_sync_generate():
     Return: file for algorithmic generation of midi file
     '''
     static_path = 'static'
+    if request.method == 'POST':
+        instrument = request.form['instrument']
+        model_input = request.form['model_input']
+        try:
+            f = request.files['file']
+        except Exception as err:
+            return render_template('sorry.html', message='Please provide valid file')
+        f.save(f'static/{f.filename}')
+        print(f.filename)
+
+    out_music = tone.gen_music(f.filename)
+    if out_music is None:
+        return render_template('sorry.html')
+
+    base = os.path.basename(f.filename)
+    filename1 = os.path.splitext(base)[0]
+    timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
+
+    new_file = os.path.join(static_path, 'midi_generation', 
+                            filename1 + timestr + '.mid')
+    print(f'new file: {new_file}')
+    out_music.write('midi', new_file)
+
+    # ai_sync_algo_music = auto_predict.music_stream(
+    #     instrument, model_input, timesig, bpm)
+
+    timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
+    output_filename = f'static/ai_generation/ai_algo_generation/{instrument}_' + timestr + '.mid'
+    ai_sync_algo_music.write('midi', output_filename)
+
+    
+    
     
     return render_template('ai_algo_sync_generate.html')
 
