@@ -5,6 +5,21 @@
 {% endblock %}
 
 {% block main %}
-
-    <h1>Under connection</h1>
+<h1>Music has been generated!</h1>
+<h2 class="small">Original Image</h2>
+<div class="center">
+    <img class='image' src="static/{{ ori_image }}"/>
+    <p class="small">16x16 Black and White Image</p>
+    <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
+    <p class="small">
+        Instrument: {{ instrument }} <br/>
+    </p>
+    <br/>
+    <a href="{{ file_path }}">
+        <button class="bn-main bn">Download Music</button>
+    </a>
+    <br/>
+    <a href="/algo_generate">
+        <button class="bn-main bn">Generate New</button>
+    </a>
 {% endblock %}
