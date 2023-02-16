@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import music21 as m21
 from music21.chord import Chord
 from music21.stream import Stream
 
@@ -65,3 +66,21 @@ def gen_music(filename):
             stream_algo.insertIntoNoteOrChord(y, Chord(add))
 
     return stream_algo
+
+def get_tempo(file_name):
+    '''
+    Args:
+        file_name: Path -> Path to midi file
+    Return:
+        time_sig: str -> return timesignature of midi event
+        bpm: str -> return bpm of midi file
+    '''
+    try:
+        music_score = m21.converter.parse(file_name)
+    except Exception as err:
+        print('*'*10,'Error in loading file: ', err, '*'*10)
+        return '4/4', '120'
+    time_sig = music_score.recurse().getElementsByClass(m21.meter.TimeSignature)[0].ratioString
+    bpm = music_score.recurse().getElementsByClass(m21.tempo.MetronomeMark)[0].number
+    print('*'*10, time_sig, bpm, '*'*10)
+    return time_sig, bpm
