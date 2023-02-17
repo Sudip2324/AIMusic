@@ -237,3 +237,9 @@ output{
     outline: 1px solid #000;
     outline: -webkit-focus-ring-color auto 2px;
   }
+
+  .cls{
+    padding:10px;
+    background-color:lightblue;
+    font-size: 10px
+  }

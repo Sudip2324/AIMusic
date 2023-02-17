@@ -14,5 +14,7 @@
         Bits per Minute: {{ bpm }} <br/>
     </p>
     <a href={{ file_path }}><button class="bn-main bn">Download Now</button></a>
+    <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
+    <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span>
     </div>
 {% endblock %}
