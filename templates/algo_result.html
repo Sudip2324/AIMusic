@@ -16,6 +16,8 @@
         <a href="{{ file_path }}">
             <button class="bn-main bn">Download Music</button>
         </a>
+        <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
+        <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span>
         <br/>
         <a href="/algorithm">
             <button class="bn-main bn">Generate New</button>

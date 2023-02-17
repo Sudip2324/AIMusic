@@ -13,6 +13,12 @@
         Time Signature: {{ timesig }} <br/>
         Bits per Minute: {{ bpm }} <br/>
     </p>
+    
+    <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
+    <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span><br/>
     <a href={{ file_path }}><button class="bn-main bn">Download Now</button></a>
+    <a href="/">
+        <button class="bn-main bn">Generate New</button>
+    </a>
     </div>
 {% endblock %}
