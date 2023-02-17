@@ -1,8 +1,13 @@
+import os
 import json
 import numpy as np
 import music21 as m21
 import tensorflow as tf
 
+STATIC_PATH = 'static/models'
+MODEL_NAME = 'music_model.h5'
+ITN_PATH = 'int_notes.json'
+ITD_PATH = 'int_durations.json'
 def sample_with_temp(preds, temperature):
     if temperature == 0:
         return np.argmax(preds)
@@ -21,6 +26,12 @@ def load_decoder(file1, file2):
     return element_to_int, int_to_element
 
 def fraction(duration):
+    '''
+    Args:
+        duration: str -> duration in string
+    Return
+        duration: float -> changing str to float
+    '''
     if '/' in duration:
         lst = duration.split('/')
         return int(lst[0])/int(lst[1])
@@ -29,12 +40,14 @@ def fraction(duration):
 
 
 def music_stream(instrument, model_input, timesig, bpm):
-    model = tf.keras.models.load_model(model_input)
+    model_dir = os.path.join(STATIC_PATH, model_input, MODEL_NAME)
+    itn_dir = os.path.join(STATIC_PATH, model_input, ITN_PATH)
+    itd_dir = os.path.join(STATIC_PATH, model_input, ITD_PATH)
+    
+    model = tf.keras.models.load_model(model_dir)
 
-    # getting decoder dic
-    int_to_note, int_to_duration = load_decoder(
-                                            'static/models/int_notes.json', 
-                                            'static/models/int_durations.json')
+    # getting decoder dict
+    int_to_note, int_to_duration = load_decoder(itn_dir, itd_dir)
 
     # parsing json file
     int_to_note = json.loads(int_to_note)

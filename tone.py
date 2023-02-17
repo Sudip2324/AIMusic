@@ -6,7 +6,7 @@ from music21.chord import Chord
 from music21.stream import Stream
 
 def gen_music(filename):
-    ''' converting image to b&w 16x16 px'''
+    ''' converting image to black and white 16x16 px'''
     static_path = 'static'
     im = cv2.imread(os.path.join(static_path, filename))
     try:

@@ -62,7 +62,7 @@ def algo_generate():
         try:
             f = request.files['file']
         except Exception as err:
-            return render_template('sorry.html', message='Please provide valid file')
+            return render_template('sorry.html', message=f'Please provide valid file: {err}')
 
         f.save(f'static/{f.filename}')
         print(f.filename)
