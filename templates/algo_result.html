@@ -13,12 +13,13 @@
         <p class="small">16x16 Black and White Image</p>
         <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
         <br/>
-        <a href="{{ file_path }}">
-            <button class="bn-main bn">Download Music</button>
-        </a>
+        
         <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
         <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span>
         <br/>
+        <a href="{{ file_path }}">
+            <button class="bn-main bn">Download Music</button>
+        </a><br />
         <a href="/algorithm">
             <button class="bn-main bn">Generate New</button>
         </a>

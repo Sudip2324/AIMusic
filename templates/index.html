@@ -9,7 +9,7 @@
     <form action="{{ url_for('ai_generate')}}" method="POST" oninput="result.value = bpm.value">
         <label>Instrument</label>
         <select name="instrument">
-            <option value="Piano">Piano</option>
+            <option value="Piano" selected>Piano</option>
             <option value="Guitar">Guitar</option>
             <option value="Violin">Violin</option>
             <option value="Flute">Flute</option>
@@ -21,6 +21,7 @@
         <label>Model</label>
         <select name="model_input">
             <option value="hindi">Hindi</option>
+            <option value="essen" selected>Essen</option>
         </select>
         <br />
         
