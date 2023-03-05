@@ -63,11 +63,13 @@ def algo_generate():
             f = request.files['file']
         except Exception as err:
             return render_template('sorry.html', message=f'Please provide valid file: {err}')
+        instrument1 = request.form['instrument1']
+        instrument2 = request.form['instrument2']
 
         f.save(f'static/{f.filename}')
         print(f.filename)
 
-    out_music = tone.gen_music(f.filename)
+    out_music = tone.gen_music(f.filename, instrument1, instrument2)
     if out_music is None:
         return render_template('sorry.html')
 

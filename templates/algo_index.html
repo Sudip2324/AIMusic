@@ -7,6 +7,25 @@
 {% block main %}
     <h1>Music Generation Using Algorithm</h1><br>
     <form action="{{ url_for('algo_generate')}}" method="POST" enctype = "multipart/form-data">
+        <label>First Instrument</label>
+        <select name="instrument1">
+            <option value="Piano" selected>Piano</option>
+            <option value="Guitar">Guitar</option>
+            <option value="Violin">Violin</option>
+            <option value="Flute">Flute</option>
+            <option value="Soprano">Soprano</option>
+            <option value="ElectricGuitar">ElectricGuitar</option>
+        </select>
+        <label>Second Instrument</label>
+        <select name="instrument2">
+            <option value="None" selected> </option>
+            <option value="Piano">Piano</option>
+            <option value="Guitar">Guitar</option>
+            <option value="Violin">Violin</option>
+            <option value="Flute">Flute</option>
+            <option value="Soprano">Soprano</option>
+            <option value="ElectricGuitar">ElectricGuitar</option>
+        </select>
         <label>Upload Image</label>
         <div class="file-input">
             <input type="file" id="file" class="file" name="file" accept="image/*" required>
