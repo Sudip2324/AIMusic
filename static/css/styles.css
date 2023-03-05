@@ -89,7 +89,8 @@ h1, h2 {
     font-size: 50px;
     font-weight: 600;
     color: white;
-    margin-top:130px; 
+    margin-top:20%;
+     /*changed from 130px to 20%  */
 }
 
 label {
@@ -242,4 +243,8 @@ output{
     padding:10px;
     background-color:lightblue;
     font-size: 10px
+  }
+
+  .current-time{
+    color: #000;
   }

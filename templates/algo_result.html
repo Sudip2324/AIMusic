@@ -17,6 +17,21 @@
         <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
         <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span>
         <br/>
+        <section id="section1">
+
+            <midi-visualizer
+              type="piano-roll"
+              src="{{ file_path }}">
+            </midi-visualizer>
+            
+            <midi-player
+              src="{{ file_path }}"
+              sound-font visualizer="#section1 midi-visualizer" loop>
+            </midi-player>
+            </section>
+            
+            
+            <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
         <a href="{{ file_path }}">
             <button class="bn-main bn">Download Music</button>
         </a><br />

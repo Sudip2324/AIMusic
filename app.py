@@ -1,8 +1,8 @@
 import os
 import time
+from flask import Flask, request, render_template, url_for
 import auto_predict
 import tone
-from flask import Flask, request, render_template, url_for
 
 app = Flask(__name__)
 
