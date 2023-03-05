@@ -104,7 +104,7 @@ def ai_algo_sync_generate():
         f.save(f'static/{f.filename}')
         print(f.filename)
 
-    out_music = tone.gen_music(f.filename)
+    out_music = tone.gen_music(f.filename, instrument1=instrument)
     if out_music is None:
         return render_template('sorry.html')
 

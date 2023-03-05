@@ -43,7 +43,14 @@ def music_stream(instrument, model_input, timesig, bpm):
     model_dir = os.path.join(STATIC_PATH, model_input, MODEL_NAME)
     itn_dir = os.path.join(STATIC_PATH, model_input, ITN_PATH)
     itd_dir = os.path.join(STATIC_PATH, model_input, ITD_PATH)
-    
+    # assigning seq_len for model accordingly as used while training
+    if model_input == "hindi":
+        max_seq_len = 32
+        seq_len = 32
+    else:
+        max_seq_len = 16
+        seq_len = 16
+
     model = tf.keras.models.load_model(model_dir)
 
     # getting decoder dict
@@ -60,12 +67,10 @@ def music_stream(instrument, model_input, timesig, bpm):
     notes_temp = 0.5
     duration_temp = 0.5
     max_extra_notes = 100
-    max_seq_len = 32
-    seq_len = 32
 
     # randomize seed for predictation
-    notes = np.random.randint(n_notes_distict, size=32)
-    durations = np.random.randint(n_durations_distinct, size=32)
+    notes = np.random.randint(n_notes_distict, size=seq_len)
+    durations = np.random.randint(n_durations_distinct, size=seq_len)
 
     notes_input_sequence = notes.tolist()
     durations_input_sequence = durations.tolist()

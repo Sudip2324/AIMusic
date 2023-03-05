@@ -33,7 +33,14 @@ def generate_part(switch, bw_image, instrument):
     return stream_algo
 
 def gen_music(filename, instrument1, instrument2="None"):
-    ''' converting image to black and white 16x16 px'''
+    '''Generate music using algorithmic approch
+    Args:
+        filename: Path-> path of image file to be used to generate music
+        instrument1: str -> Default string used to generate music
+        instrument2: str(default: "None") -> name of instrument used to add to music, additional instrument for music
+    Return:
+        stream_algo: music21.stream.Stream -> object of music21 after generating music
+    '''
     static_path = 'static'
     img = cv2.imread(os.path.join(static_path, filename))
 
