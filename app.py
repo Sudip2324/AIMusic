@@ -117,10 +117,10 @@ def ai_algo_sync_generate():
     print(f'new file: {new_file}')
     out_music.write('midi', new_file)
 
-    timesig, bpm = tone.get_tempo(new_file)
+    notes, durations, timesig, bpm = tone.get_tempo(new_file)
 
     ai_sync_algo_music = auto_predict.music_stream(instrument, model_input,
-                                                     timesig, bpm)
+                                                     timesig, bpm, notes_seed=notes, durations_seed=durations)
 
     timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
     output_filename = f'static/ai_generation/ai_algo_generation/{instrument}_' + timestr + '.mid'

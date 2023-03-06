@@ -39,7 +39,7 @@ def fraction(duration):
         return float(duration)
 
 
-def music_stream(instrument, model_input, timesig, bpm):
+def music_stream(instrument, model_input, timesig, bpm, notes_seed=None, durations_seed=None):
     model_dir = os.path.join(STATIC_PATH, model_input, MODEL_NAME)
     itn_dir = os.path.join(STATIC_PATH, model_input, ITN_PATH)
     itd_dir = os.path.join(STATIC_PATH, model_input, ITD_PATH)
@@ -68,12 +68,16 @@ def music_stream(instrument, model_input, timesig, bpm):
     duration_temp = 0.5
     max_extra_notes = 100
 
-    # randomize seed for predictation
-    notes = np.random.randint(n_notes_distict, size=seq_len)
-    durations = np.random.randint(n_durations_distinct, size=seq_len)
+    if notes_seed is None:
+        # randomize seed for predictation
+        notes = np.random.randint(n_notes_distict, size=seq_len).tolist()
+        durations = np.random.randint(n_durations_distinct, size=seq_len).tolist()
+    else:
+        notes = notes_seed
+        durations = durations_seed
 
-    notes_input_sequence = notes.tolist()
-    durations_input_sequence = durations.tolist()
+    notes_input_sequence = notes
+    durations_input_sequence = durations
 
     prediction_output = []
     overall_preds = []

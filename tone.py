@@ -11,9 +11,9 @@ def generate_part(switch, bw_image, instrument):
         bw_image: np.array -> 16x16 black and white image
         instrument: str -> instrument for music part
     Return:
-        Music21 stream part
+        Music21 stream object
     '''
-    stream_algo = m21.stream.Part()
+    stream_algo = m21.stream.Stream()
     instrument_func = getattr(m21.instrument, instrument)()
     stream_algo.insert(0.0, instrument_func)
     offset = 0
@@ -137,6 +137,7 @@ def gen_music(filename, instrument1, instrument2="None"):
         stream_algo.insert(0.0, stream2)
     return stream_algo
 
+import json
 def get_tempo(file_name):
     '''
     Args:
@@ -145,12 +146,53 @@ def get_tempo(file_name):
         time_sig: str -> return timesignature of midi event
         bpm: str -> return bpm of midi file
     '''
+    notes_to_int = {"A3": 1,
+                    "A4": 3,
+                    "A5": 8,
+                    "C3": 26,
+                    "C4": 27,
+                    "C5": 28,
+                    "C6": 31,
+                    "D3": 32,
+                    "D4": 33,
+                    "D5": 35,
+                    "F3": 56,
+                    "F4": 57,
+                    "F5": 61,
+                    "G3": 67,
+                    "G4": 68,
+                    "G5": 73,
+                    "rest": 80}
+    duration_to_int = {
+        0.5: 5,
+        1: 9
+    }
     try:
-        music_score = m21.converter.parse(file_name)
+        music_score = m21.converter.parse(file_name).chordify()
     except Exception as err:
         print('*'*10,'Error in loading file: ', err, '*'*10)
         return '4/4', '120'
-    time_sig = music_score.recurse().getElementsByClass(m21.meter.TimeSignature)[0].ratioString
-    bpm = music_score.recurse().getElementsByClass(m21.tempo.MetronomeMark)[0].number
+    print('up')
+    time_sig = music_score.getTimeSignatures()[0].ratioString
+    print('down')
+    bpm = music_score.metronomeMarkBoundaries()[0][2].number
+
+    notes, note_list = [], []
+    durations, duration_list = [], []
+    for element in music_score.flat:
+        if isinstance(element, m21.chord.Chord):
+            notes.append('.'.join(n.nameWithOctave for n in element.pitches))
+            durations.append(element.duration.quarterLength)
+        elif isinstance(element, m21.note.Rest):
+            if element.isRest:
+                notes.append(str(element.name))
+                durations.append(element.duration.quarterLength)
+    for chord, duration in zip(notes, durations):
+        note_int = notes_to_int[chord.split('.')[0]]
+        # print(chord.split('.')[0], note_int)
+        # print(duration)
+        duration_int = duration_to_int[duration]
+        note_list.append(note_int)
+        duration_list.append(duration_int) 
     print('*'*10, time_sig, bpm, '*'*10)
-    return time_sig, bpm
+    return note_list, duration_list, time_sig, bpm
