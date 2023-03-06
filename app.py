@@ -120,7 +120,8 @@ def ai_algo_sync_generate():
     notes, durations, timesig, bpm = tone.get_tempo(new_file)
 
     ai_sync_algo_music = auto_predict.music_stream(instrument, model_input,
-                                                     timesig, bpm, notes_seed=notes, durations_seed=durations)
+                                                     timesig, bpm, 
+                                                     notes_seed=notes, durations_seed=durations)
 
     timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
     output_filename = f'static/ai_generation/ai_algo_generation/{instrument}_' + timestr + '.mid'

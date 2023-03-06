@@ -162,10 +162,12 @@ def get_tempo(file_name):
                     "G3": 67,
                     "G4": 68,
                     "G5": 73,
-                    "rest": 80}
+                    "rest": 75}
     duration_to_int = {
         0.5: 5,
-        1: 9
+        1: 9,
+        1.5: 13,
+        2: 16
     }
     try:
         music_score = m21.converter.parse(file_name).chordify()
@@ -191,8 +193,11 @@ def get_tempo(file_name):
         note_int = notes_to_int[chord.split('.')[0]]
         # print(chord.split('.')[0], note_int)
         # print(duration)
-        duration_int = duration_to_int[duration]
+        try:
+            duration_int = duration_to_int[duration]
+        except:
+            duration_int = duration_to_int[1]
         note_list.append(note_int)
-        duration_list.append(duration_int) 
+        duration_list.append(duration_int)
     print('*'*10, time_sig, bpm, '*'*10)
     return note_list, duration_list, time_sig, bpm

@@ -84,8 +84,8 @@ def music_stream(instrument, model_input, timesig, bpm, notes_seed=None, duratio
 
     for note_index in range(max_extra_notes):
         prediction_input = [
-            np.array([notes_input_sequence]), np.array(
-                [durations_input_sequence])
+            np.array([notes_input_sequence]), 
+            np.array([durations_input_sequence])
         ]
 
         notes_prediction, durations_prediction = model.predict(
