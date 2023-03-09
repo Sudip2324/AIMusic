@@ -1,22 +1,22 @@
 {% extends "layout.html" %}
 
 {% block title %}
-: Generated Using AI dync Algorithm
+: Generated Using AI Sync Algorithm
 {% endblock %}
 
 {% block main %}
 <h1>Music has been generated!</h1>
-<h2 class="small">Original Image</h2><br /><br /><br /><br />
+<h2 class="small">Original Image</h2>
 <div class="center">
     <img class='image' src="static/{{ ori_image }}"/>
-    <p class="small">16x16 Black and White Image</p>
+    <p class="small">16x{{length}} Black and White Image</p>
     <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
     <p class="small">
-        Instrument: {{ instrument }} <br/>
+        AI Instrument: {{ instrument }} <br/>
+        Tone Matrix Instrument: {{ algo_instrument }} <br/>
         Time Signature : {{ timesig }} <br/>
         Bits per Minute: {{ bpm }} <br/>
     </p>
-    <br/>
     
     <span class="cls"><a href="#" onClick="MIDIjs.play('{{ algo_ai_music }}');">Play MIDI </a></span>
     <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span>

@@ -66,7 +66,7 @@ def music_stream(instrument, model_input, timesig, bpm, notes_seed=None, duratio
 
     notes_temp = 0.5
     duration_temp = 0.5
-    max_extra_notes = 100
+    max_extra_notes = 128
 
     if notes_seed is None:
         # randomize seed for predictation

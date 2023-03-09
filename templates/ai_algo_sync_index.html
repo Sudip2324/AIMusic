@@ -7,12 +7,22 @@
 {% block main %}
     <h1>AI Music Generation Sync with the Algorithmic Music Rhythm</h1><br>
     <form action="{{ url_for('ai_algo_sync_generate')}}" method="POST" enctype="multipart/form-data">
-        <label>Instrument</label>
+        <label>Instrument For AI</label>
         <select name="instrument">
-            <option value="Piano">Piano</option>
+            <option value="Piano" selected>Piano</option>
             <option value="Guitar">Guitar</option>
             <option value="Violin">Violin</option>
             <option value="Flute">Flute</option>
+            <option value="Soprano">Soprano</option>
+            <option value="ElectricGuitar">ElectricGuitar</option>
+        </select>
+        <br />
+        <label>Instrument For Tone Matrix</label>
+        <select name="algo_instrument">
+            <option value="Piano">Piano</option>
+            <option value="Guitar">Guitar</option>
+            <option value="Violin">Violin</option>
+            <option value="Flute" selected>Flute</option>
             <option value="Soprano">Soprano</option>
             <option value="ElectricGuitar">ElectricGuitar</option>
         </select>
@@ -27,7 +37,7 @@
         <div class="file-input">
             <input type="file" id="file" class="file" name="file" accept="image/*" required>
             <label for="file">Select Image</label>
-          </div>
+        </div>
 
         <input class="bn-main bn" type="submit" value="Generate Music"/>
     </form>

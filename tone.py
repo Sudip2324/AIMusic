@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import music21 as m21
 
-def generate_part(switch, bw_image, instrument):
+def generate_part(switch, bw_image, instrument, SEQ_LEN=16):
     '''
     Generate music part
     Args:
@@ -17,7 +17,7 @@ def generate_part(switch, bw_image, instrument):
     instrument_func = getattr(m21.instrument, instrument)()
     stream_algo.insert(0.0, instrument_func)
     offset = 0
-    for y in range(16):
+    for y in range(SEQ_LEN):
         add = ''
         for x in range(16):
             if (bw_image[x][y] == 255):
@@ -30,9 +30,16 @@ def generate_part(switch, bw_image, instrument):
             # print('single',offset)
         else:
             offset += 1
+    if SEQ_LEN in [64, 128]:
+        stream_algo.insert([0, m21.dynamics.Dynamic('p'),
+                    offset/6, m21.dynamics.Dynamic('mp'),
+                    offset/3, m21.dynamics.Dynamic('mf'),
+                    offset/2, m21.dynamics.Dynamic('f'),
+                    2*offset/3, m21.dynamics.Dynamic('mf'),
+                    5*offset/6, m21.dynamics.Dynamic('mp')])
     return stream_algo
 
-def gen_music(filename, instrument1, instrument2="None"):
+def gen_music(filename, instrument1, instrument2="None", SEQ_LEN=16):
     '''Generate music using algorithmic approch
     Args:
         filename: Path-> path of image file to be used to generate music
@@ -41,6 +48,7 @@ def gen_music(filename, instrument1, instrument2="None"):
     Return:
         stream_algo: music21.stream.Stream -> object of music21 after generating music
     '''
+    
     static_path = 'static'
     img = cv2.imread(os.path.join(static_path, filename))
 
@@ -49,7 +57,7 @@ def gen_music(filename, instrument1, instrument2="None"):
 
     try:
         # Resize the image to 16x16 pixels
-        resized_img = cv2.resize(gray_img, (16, 16))
+        resized_img = cv2.resize(gray_img, (SEQ_LEN, 16))
         print('RESIZING SUCCESSFUL')
     except Exception as err:
         print(f'{filename} is invalid: {str(err)}')
@@ -59,7 +67,7 @@ def gen_music(filename, instrument1, instrument2="None"):
     intensity_values = resized_img.flatten()
 
     # Transpose the intensity values to get the values column-wise
-    intensity_values_column_wise = [intensity_values[i::16] for i in range(16)]
+    intensity_values_column_wise = [intensity_values[i::SEQ_LEN] for i in range(SEQ_LEN)]
 
     column_index = []
     column_index_min = []
@@ -78,13 +86,13 @@ def gen_music(filename, instrument1, instrument2="None"):
                                     filename1 + '16x16.png')
 
     # make 16x16 tone matrix
-    switch = np.zeros((16, 16), dtype='object')
+    switch = np.zeros((16, SEQ_LEN), dtype='object')
     notes = ['C6', 'A5', 'G5', 'F5', 'D5', 'C5', 'A4', 'G4',
             'F4', 'D4', 'C4', 'A3', 'G3', 'F3', 'D3', 'C3']
     for i in range(16):
         switch[i, :] = notes[i]
 
-    bw_image = np.zeros((16, 16), dtype='uint8')
+    bw_image = np.zeros((SEQ_LEN, 16), dtype='uint8')
     for i, index_col in enumerate(column_index):
         # print(index_col)
         if len(index_col) == 1:
@@ -114,7 +122,7 @@ def gen_music(filename, instrument1, instrument2="None"):
     cv2.imwrite(small_image_path, bw_image)
 
     # switches control using minimum intensity
-    bw_image_min = np.zeros((16, 16), dtype='uint8')
+    bw_image_min = np.zeros((SEQ_LEN, 16), dtype='uint8')
     for i, index_col in enumerate(column_index_min):
         if len(index_col) == 1:
             col = index_col[0]
@@ -125,19 +133,18 @@ def gen_music(filename, instrument1, instrument2="None"):
 
     bw_image_min = bw_image_min.T
     # generating midi file for instrument1
-    stream1 = generate_part(switch, bw_image, instrument=instrument1)
+    stream1 = generate_part(switch, bw_image, instrument=instrument1, SEQ_LEN=SEQ_LEN)
     if instrument2 == "None":
         stream_algo = stream1
         stream1.show('text')
+        return stream_algo
     else:
-        stream2 = generate_part(switch, bw_image_min, instrument=instrument2)
+        stream2 = generate_part(switch, bw_image_min, instrument=instrument2, SEQ_LEN=SEQ_LEN)
         stream_algo = m21.stream.Stream()
-        stream2.show('text')
         stream_algo.insert(0.0, stream1)
         stream_algo.insert(0.0, stream2)
     return stream_algo
 
-import json
 def get_tempo(file_name):
     '''
     Args:

@@ -1,5 +1,6 @@
 import os
 import time
+import music21 as m21
 from flask import Flask, request, render_template, url_for
 import auto_predict
 import tone
@@ -65,11 +66,12 @@ def algo_generate():
             return render_template('sorry.html', message=f'Please provide valid file: {err}')
         instrument1 = request.form['instrument1']
         instrument2 = request.form['instrument2']
+        music_length = int(request.form['tone_length'])
 
         f.save(f'static/{f.filename}')
         print(f.filename)
 
-    out_music = tone.gen_music(f.filename, instrument1, instrument2)
+    out_music = tone.gen_music(f.filename, instrument1, instrument2, SEQ_LEN=music_length)
     if out_music is None:
         return render_template('sorry.html')
 
@@ -84,6 +86,7 @@ def algo_generate():
     return render_template('algo_result.html',
                             file_path=new_file,
                             ori_image=f.filename,
+                            length = music_length,
                             img_name=filename1)
 
 @app.route('/ai_algo_sync_generate', methods=['GET', 'POST'])
@@ -95,6 +98,7 @@ def ai_algo_sync_generate():
     static_path = 'static'
     if request.method == 'POST':
         instrument = request.form['instrument']
+        instrument1 = request.form['algo_instrument']
         model_input = request.form['model_input']
         try:
             f = request.files['file']
@@ -104,8 +108,10 @@ def ai_algo_sync_generate():
         f.save(f'static/{f.filename}')
         print(f.filename)
 
-    out_music = tone.gen_music(f.filename, instrument1=instrument)
-    if out_music is None:
+    algo_music = tone.gen_music(f.filename,
+                                instrument1=instrument1,
+                                SEQ_LEN=128)
+    if algo_music is None:
         return render_template('sorry.html')
 
     base = os.path.basename(f.filename)
@@ -115,25 +121,33 @@ def ai_algo_sync_generate():
     new_file = os.path.join(static_path, 'midi_generation', 
                             filename1 + timestr + '.mid')
     print(f'new file: {new_file}')
-    out_music.write('midi', new_file)
+    algo_music.write('midi', new_file)
 
     notes, durations, timesig, bpm = tone.get_tempo(new_file)
 
-    ai_sync_algo_music = auto_predict.music_stream(instrument, model_input,
+    ai_music = auto_predict.music_stream(instrument, model_input,
                                                      timesig, bpm, 
-                                                     notes_seed=notes, durations_seed=durations)
+                                                     notes_seed=notes, 
+                                                     durations_seed=durations)
 
     timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
-    output_filename = f'static/ai_generation/ai_algo_generation/{instrument}_' + timestr + '.mid'
-    ai_sync_algo_music.write('midi', output_filename)
+    ai_filename = f'static/ai_generation/{instrument}_' + timestr + '.mid'
+    ai_music.write('midi', ai_filename)
+    stream_algo = m21.stream.Stream()
+    stream_algo.insert(0.0, algo_music)
+    stream_algo.insert(0.0, ai_music)
+    output_filename = f'static/ai_generation/ai_algo_generation/ai_{instrument}_algo_{instrument1}' + timestr + '.mid'
+    stream_algo.write('midi', output_filename)
     
     return render_template('ai_algo_sync_generate.html',
                             file_path = new_file,
                             ori_image = f.filename,
                             img_name = filename1,
                             instrument = instrument,
+                            algo_instrument = instrument1,
                             timesig = timesig,
                             bpm = bpm,
+                            length = 128,
                             algo_ai_music = output_filename)
 
 if __name__ == '__main__':
