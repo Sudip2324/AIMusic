@@ -248,5 +248,11 @@ output{
   }
 
   .current-time{
-    color: #000;
+    color: hsl(0, 0%, 0%);
+  }
+  #sync-algo {
+    margin-top: 15%
+  }
+  #algo-result {
+    margin-top: 23%
   }

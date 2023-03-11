@@ -7,7 +7,7 @@
 {% block main %}
 <h1>Music has been generated!</h1>
 <h2 class="small">Original Image</h2>
-<div class="center">
+<div class="center" id="sync-algo">
     <img class='image' src="static/{{ ori_image }}"/>
     <p class="small">16x{{length}} Black and White Image</p>
     <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
@@ -18,8 +18,18 @@
         Bits per Minute: {{ bpm }} <br/>
     </p>
     
-    <span class="cls"><a href="#" onClick="MIDIjs.play('{{ algo_ai_music }}');">Play MIDI </a></span>
-    <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span>
+    <section id="section1">
+        
+        <midi-player
+          src="{{ algo_ai_music }}"
+          sound-font visualizer="#section1 midi-visualizer">
+        </midi-player>
+        </section>
+        
+        
+        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+    <!-- <span class="cls"><a href="#" onClick="MIDIjs.play('{{ algo_ai_music }}');">Play MIDI </a></span>
+    <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span> -->
     <br/>
     <a href="{{ algo_ai_music }}">
         <button class="bn-main bn">Download Music</button>

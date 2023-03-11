@@ -6,10 +6,10 @@
 
 {% block main %}
 <div>
-    <h1>Music has been generated!</h1>
-    <h2 class="small">Original Image</h2>
-
-    <div class="center">
+<h1>Music has been generated!</h1>
+<h2 class="small">Original Image</h2>
+</div>
+    <div class="center" id="algo-result">
         <img class='image' src="static/{{ ori_image }}"/>
         <p class="small">16x{{length}} Black and White Image</p>
         <img src="static/upload_image/{{ img_name }}16x16.png" width="200" />
@@ -40,5 +40,5 @@
             <button class="bn-main bn">Generate New</button>
         </a>
     </div>
-</div>
+
 {% endblock %}

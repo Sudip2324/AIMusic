@@ -7,19 +7,28 @@
 {% block main %}
     <h1>Music has been generated!</h1>
     <div class="center">
-    
-    <p class="small">
-        Instrument: {{ instrument }} <br/>
-        Time Signature: {{ timesig }} <br/>
-        Bits per Minute: {{ bpm }} <br/>
-    </p>
-    
-    <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
-    <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span><br/>
-    <a href={{ file_path }}><button class="bn-main bn">Download Now</button></a>
-    <a href="/">
-        <button class="bn-main bn">Generate New</button>
-    </a>
+        
+        <p class="small">
+            Instrument: {{ instrument }} <br/>
+            Time Signature: {{ timesig }} <br/>
+            Bits per Minute: {{ bpm }} <br/>
+        </p>
+        <section id="section1">
+            
+            <midi-player
+            src="{{ file_path }}"
+            sound-font visualizer="#section1 midi-visualizer">
+            </midi-player>
+            </section>
+            
+            
+            <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+        <!-- <span class="cls"><a href="#" onClick="MIDIjs.play('{{ file_path }}');">Play MIDI </a></span>
+        <span class="cls"><a href="#" onClick="MIDIjs.stop();"> Stop MIDI Playback</a></span><br/> -->
+        <a href={{ file_path }}><button class="bn-main bn">Download Now</button></a></br>
+        <a href="/">
+            <button class="bn-main bn">Generate New</button>
+        </a>
 
     </div>
 {% endblock %}

@@ -25,7 +25,7 @@ def generate_part(switch, bw_image, instrument, SEQ_LEN=16):
                 add = add+' '+temp
         # if (add):
         stream_algo.insertIntoNoteOrChord(offset, m21.chord.Chord(add))
-        if (len(add.split()) == 1):
+        if (len(add.split()) == 1) or y%2==0:
             offset += 0.5
             # print('single',offset)
         else:

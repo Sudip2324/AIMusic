@@ -47,9 +47,11 @@ def music_stream(instrument, model_input, timesig, bpm, notes_seed=None, duratio
     if model_input == "hindi":
         max_seq_len = 32
         seq_len = 32
+        max_extra_notes = 175
     else:
         max_seq_len = 16
         seq_len = 16
+        max_extra_notes = 128
 
     model = tf.keras.models.load_model(model_dir)
 
@@ -66,7 +68,6 @@ def music_stream(instrument, model_input, timesig, bpm, notes_seed=None, duratio
 
     notes_temp = 0.5
     duration_temp = 0.5
-    max_extra_notes = 128
 
     if notes_seed is None:
         # randomize seed for predictation
