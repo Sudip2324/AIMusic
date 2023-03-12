@@ -44,11 +44,12 @@ def gen_music(filename, instrument1, instrument2="None", SEQ_LEN=16):
     Args:
         filename: Path-> path of image file to be used to generate music
         instrument1: str -> Default string used to generate music
-        instrument2: str(default: "None") -> name of instrument used to add to music, additional instrument for music
+        instrument2: str(default: "None") -> name of instrument used to add to music,
+                                            additional instrument for music
     Return:
         stream_algo: music21.stream.Stream -> object of music21 after generating music
     '''
-    
+
     static_path = 'static'
     img = cv2.imread(os.path.join(static_path, filename))
 
@@ -180,7 +181,7 @@ def get_tempo(file_name):
         music_score = m21.converter.parse(file_name).chordify()
     except Exception as err:
         print('*'*10,'Error in loading file: ', err, '*'*10)
-        return '4/4', '120'
+        return None, None, '4/4', '120'
     print('up')
     time_sig = music_score.getTimeSignatures()[0].ratioString
     print('down')
@@ -202,7 +203,7 @@ def get_tempo(file_name):
         # print(duration)
         try:
             duration_int = duration_to_int[duration]
-        except:
+        except Exception as err:
             duration_int = duration_to_int[1]
         note_list.append(note_int)
         duration_list.append(duration_int)

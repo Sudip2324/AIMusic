@@ -9,6 +9,9 @@ MODEL_NAME = 'music_model.h5'
 ITN_PATH = 'int_notes.json'
 ITD_PATH = 'int_durations.json'
 def sample_with_temp(preds, temperature):
+    '''
+    Deviate from model dataset
+    '''
     if temperature == 0:
         return np.argmax(preds)
     else:
