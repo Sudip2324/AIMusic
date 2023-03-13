@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import music21 as m21
+import matplotlib.pyplot as plt
 
 def generate_part(switch, bw_image, instrument, SEQ_LEN=16):
     '''
@@ -120,7 +121,11 @@ def gen_music(filename, instrument1, instrument2="None", SEQ_LEN=16):
     bw_image = bw_image.T
 
     # save black and white image
-    cv2.imwrite(small_image_path, bw_image)
+    plt.figure(figsize=(SEQ_LEN, 16))
+    plt.axis(False)
+    plt.imshow(bw_image, cmap='gray')
+    plt.savefig(small_image_path, transparent = True)
+    # cv2.imwrite(small_image_path, bw_image)
 
     # switches control using minimum intensity
     bw_image_min = np.zeros((SEQ_LEN, 16), dtype='uint8')
