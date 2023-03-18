@@ -1,7 +1,7 @@
 Flask==2.1.2
 matplotlib==3.5.3
 music21==7.3.3
-numpy==1.23.2
+numpy==1.21.6
 opencv_python==4.6.0.66
 tensorflow==2.11.0
 tensorflow_intel==2.11.0
