@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-: Generate Using AI sync beat Algorithm
+: Generate Using AI sync Algorithm
 {% endblock %}
 
 {% block main %}
@@ -33,11 +33,14 @@
             <option value="hindi">Hindi</option>
             <option value="essen" selected>Essen</option>
         </select>
+        <br />
+
         <label>Upload Image</label>
         <div class="file-input">
             <input type="file" id="file" class="file" name="file" accept="image/*" required>
             <label for="file">Select Image</label>
         </div>
+        <br />
 
         <input class="bn-main bn" type="submit" value="Generate Music"/>
     </form>

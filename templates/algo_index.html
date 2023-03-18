@@ -16,6 +16,8 @@
             <option value="Soprano">Soprano</option>
             <option value="ElectricGuitar">ElectricGuitar</option>
         </select>
+        <br />
+
         <label>Second Instrument</label>
         <select name="instrument2">
             <option value="None" selected> </option>
@@ -26,6 +28,7 @@
             <option value="Soprano">Soprano</option>
             <option value="ElectricGuitar">ElectricGuitar</option>
         </select>
+        <br />
         
         <label>Tone Matrix</label>
         <select name="tone_length">
@@ -34,12 +37,15 @@
             <option value="64">16x64</option>
             <option value="128">16x128</option>
         </select>
+        <br />
+
         <label>Upload Image</label>
         <div class="file-input">
             <input type="file" id="file" class="file" name="file" accept="image/*" required>
             <label for="file">Select file</label>
-          </div>
+        </div>
         <br/>
+
         <input class="bn-main bn" type="submit" value="Generate Music">
     </form>
 {% endblock %}
