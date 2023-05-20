@@ -214,3 +214,4 @@ def get_tempo(file_name):
         duration_list.append(duration_int)
     print('*'*10, time_sig, bpm, '*'*10)
     return note_list, duration_list, time_sig, bpm
+
